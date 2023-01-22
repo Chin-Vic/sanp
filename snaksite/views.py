@@ -6,7 +6,7 @@ import time
 import os
 import base64
 import threading
-
+from PIL import Image
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -93,9 +93,10 @@ def pick_pic(request):
 
 def record_pic(request):
     if request.method == 'POST':
+        img_type = request.session.get('slider')
         B_img_src = request.POST.getlist('B_img_src[]')
-        imgs = [img for img in B_img_src if 'image_' in img]
-        final = img_post_process(imgs)
+        imgs = [img.split('/')[-1] for img in B_img_src if 'image_' in img]
+        final = img_post_process(imgs,img_type)
         print_photo(final)
     return HttpResponse("success")
 
@@ -107,9 +108,18 @@ def print_pic(request):
         os.remove(file_path)
     return render(request, 'print_pic.html')
 
-def img_post_process(imgs):
-    print(imgs)
+def img_post_process(imgs,img_type):
+    img_postion_info = get_imgs_postion_info(img_type)
+    for img in imgs:
+        bmp = Image.open (os.path.join('./static/images', img))
+
 
 
 def print_photo(imgs):
     pass 
+
+def get_imgs_postion_info(img_type):
+    f = open(os.path.join('./static/position', img_type+'.txt'))
+    for line in f.readlines():
+        print(line)
+    f.close
