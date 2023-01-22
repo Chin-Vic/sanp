@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <script>
+        setInterval(function() {
+            $.ajax({
+                url: "{% url 'index' %}",
+                success: function(data) {
+                    if (data.buffer_length >10) {
+                        window.location.href = "{% url 'pick_background' %}";
+                    }
+                    $("#buffer-length").text(data.buffer_length);
+                }
+            });
+        }, 1000);
+
+        $(document).click(function() {
+            alert("請投錢");
+        });
+    </script>
+    <p>Buffer length: <span id="buffer-length"></span></p>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap3 %}
+<html lang="zh-hant">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Sanp</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-grad-school.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/lightbox.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slider.css' %}">
+  </head>
+
+<body>
+  
+  <!-- ***** Main Banner Area Start ***** -->
+  <section class="section main-banner" id="top" data-section="section1">
+      <video autoplay muted loop id="bg-video">
+          <source src="{% static 'assets/images/cover.mp4' %}" type="video/mp4" />
+      </video>
+      <div class="video-overlay header-text">
+          <div class="caption">
+              <!-- <h6></h6> -->
+              <h2><em>印照片中</em> ...</h2>
+          </div>
+      </div>
+  </section>
+  <script>      
+    setInterval('window.location.assign("http://127.0.0.1:8000/");',30000);
+        </script>
+</body>
+</html>

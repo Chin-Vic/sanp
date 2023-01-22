@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap3 %}
+<html lang="zh-hant">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <title>Pick Pic</title>
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    
+        <!-- Additional CSS Files -->
+        <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/templatemo-grad-school.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/lightbox.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/slider.css' %}">
+    </head>
+<body>
+    <section class="section video" data-section="section6">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section-heading">
+                <h2>挑選照片<div id="countdown-timer"></div></h2>
+                <table id="table-B" style="width: 340px; height:440px; right:5px; top:80px;" >
+                    <tr>
+                        <td style="width: 160px; height:140px;"></td>
+                        <td style="width: 160px; height:140px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 160px; height:140px;"></td>
+                        <td style="width: 160px; height:140px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 160px; height:140px;"></td>
+                        <td style="width: 160px; height:140px;"></td>
+                    </tr>
+                </table>
+                <img src="/static/assets/images/{{type}}.png"  style="width: 400px; height:650px; position:relative;top:-500px; background-color:transparent;">>
+                <table id="table-A"  style="top:-500px; right:40px;">
+                    <tr>
+                        <td style="width:20%; height:30%;text-align:center; vertical-align:middle"><img src= "/static/image_1.jpeg" style="width: 160px; height:140px;" onclick="moveToTableB(this)"></td>
+                        <td style="width:20%; height:30%;text-align:center; vertical-align:middle"><img src= "/static/image_2.jpeg" style="width: 160px; height:140px;" onclick="moveToTableB(this)"></td>
+                        <td style="width:20%; height:30%;text-align:center; vertical-align:middle"><img src= "/static/image_3.jpeg" style="width: 160px; height:140px;" onclick="moveToTableB(this)"></td>
+                        <td style="width:20%; height:30%;text-align:center; vertical-align:middle"><img src= "/static/image_4.jpeg" style="width: 160px; height:140px;" onclick="moveToTableB(this)"></td>
+                        <td style="width:20%; height:30%;text-align:center; vertical-align:middle"><img src= "/static/image_5.jpeg" style="width: 160px; height:140px;" onclick="moveToTableB(this)"></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%; height:30%;text-align:center; vertical-align:middle"><img src= "/static/image_6.jpeg" style="width: 160px; height:140px;" onclick="moveToTableB(this)"></td>
+                        <td style="width:20%; height:30%;text-align:center; vertical-align:middle"><img src= "/static/image_7.jpeg" style="width: 160px; height:140px;" onclick="moveToTableB(this)"></td>
+                        <td style="width:20%; height:30%;text-align:center; vertical-align:middle"><img src= "/static/image_8.jpeg" style="width: 160px; height:140px;" onclick="moveToTableB(this)"></td>
+                        <td style="width:20%; height:30%;text-align:center; vertical-align:middle"><img src= "/static/image_9.jpeg" style="width: 160px; height:140px;" onclick="moveToTableB(this)"></td>
+                    </tr>
+                </table>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    <script>
+    var time = 45; 
+    var countdownTimer = document.getElementById('countdown-timer');
+    setInterval(function () {
+        countdownTimer.innerHTML = time; 
+            time--;
+            if (time <= 0) {
+                record()
+            }     
+    }, 1000);
+    function moveToTableB(img) {
+        var tableB = document.getElementById("table-B");
+        var cells = tableB.getElementsByTagName("td");
+        
+        for (var i = 0; i < cells.length; i++) {
+            var cell = cells[i];
+            if (cell.hasChildNodes() == false) {
+                playAudio_slider();
+                img.style.width = "160px";
+                img.style.height = "140px";
+                cell.appendChild(img);
+                img.onclick = function() { moveToTableA(img); };
+                break;
+            }
+        }
+    }
+    function moveToTableA(img) {
+        
+        var tableA = document.getElementById("table-A");
+        var cells = tableA.getElementsByTagName("td");
+        for (var i = 0; i < cells.length; i++) {
+            var cell = cells[i];
+            if (cell.hasChildNodes() == false) {
+                playAudio_slider();
+                cell.appendChild(img);
+                img.onclick = function() { moveToTableB(img); };
+                break;
+            }
+        }
+    }
+
+    function record(){
+    var B_table = document.getElementById("table-B");
+    var B_imgs = B_table.getElementsByTagName("img");
+    var B_img_src = [];
+    // window.alert(5 + 6);
+
+    for(var i = 0; i < B_imgs.length; i++){
+        B_img_src.push(B_imgs[i].src);
+    }
+    if(B_img_src.length < 6){
+        var A_table = document.getElementById("table-A");
+        var A_imgs = A_table.getElementsByTagName("img");
+        for(var i = 0; i < A_imgs.length; i++){
+            if(B_img_src.length < 6){
+                moveToTableB(A_imgs[i]);
+                B_img_src.push(A_imgs[i].src);
+            }
+        }
+    }
+    $.ajax({
+    type: 'POST',
+    url: '{% url 'record_pic' %}',
+    data: { 'B_img_src': B_img_src },
+    success: function(data) {
+        
+        if(B_img_src.length == 6){
+            playAudio();
+            window.location.href = '/print_pic';}
+        
+    }
+});
+
+}
+function playAudio_slider() {
+    const audio = document.createElement("audio");
+    audio.src = "{% static 'assets/images/di.wav' %}";
+    audio.play();
+    }
+
+    function playAudio() {
+    const audio = document.createElement("audio");
+    audio.src = "{% static 'assets/images/click.mp3' %}";
+    audio.play();
+    }
+
+    </script>
+    
+</body>
+</html>

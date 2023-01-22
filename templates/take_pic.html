@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap3 %}
+<html lang="zh-hant">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <title>Take Pic</title>
+        
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    
+        <!-- Additional CSS Files -->
+        <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/templatemo-grad-school.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/lightbox.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/slider.css' %}">
+    </head>
+<body>
+<!-- HTML Code for displaying video stream -->
+
+<section class="section courses" data-section="section4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-heading">
+            <h2>對準鏡頭<p>剩下張數: <span id="re_pic"></span></p><div id="countdown-timer"></div></h2>
+            <video id="webcam" autoplay></video>
+            <button id="take-photo">Take Photo</button>
+            <table id="photo-table" >
+                <tr>
+                  <td id="photo-1"></td>
+                  <td id="photo-2"></td>
+                    <td id="photo-3"></td>
+                    <td id="photo-4"></td>
+                    <td id="photo-5"></td>
+                  </tr>
+                  <tr>
+                    <td id="photo-6"></td>
+                    <td id="photo-7"></td>
+                      <td id="photo-8"></td>
+                      <td id="photo-9"></td>
+                    </tr>
+              </table>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<script>
+    // Get access to webcam
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then(stream => {
+            var webcam = document.getElementById('webcam');
+            webcam.srcObject = stream;
+        });
+
+    var photoCount = 0;
+    var re_pic = document.getElementById('re_pic');
+    var countdownBtn = document.getElementById('take-photo');
+    var countdownTimer = document.getElementById('countdown-timer');
+    re_pic.innerHTML = 9-photoCount;
+    countdownBtn.addEventListener('click', function() {
+        playAudio() ;
+        var time = 5; // 設定倒數時間
+        countdownTimer.innerHTML = time; // 顯示倒數時間
+        var interval = setInterval(function() {
+            if (time >1) {
+                playAudio_c();
+            }
+            time--;
+            countdownTimer.innerHTML = time;
+            if (time <= 0) {
+                clearInterval(interval); // 清除計時器
+                // 執行點擊事件
+                playAudio_t();
+                take();
+            }
+        }, 1000);
+    });
+
+
+    // Handle button click event
+    function take() {
+    var webcam, canvas, context, imgData;
+            // Get elements
+    webcam = document.getElementById('webcam');
+    canvas = document.createElement('canvas');
+    context = canvas.getContext('2d');
+
+    // Set canvas size
+    canvas.width = webcam.videoWidth;
+    canvas.height = webcam.videoHeight;
+
+    // Draw current video frame on canvas
+    context.drawImage(webcam, 0, 0, canvas.width, canvas.height);
+
+    // Get image data from canvas
+    imgData = canvas.toDataURL('image/jpeg');
+
+    // Stop video stream
+    // webcam.srcObject.getTracks().forEach(track => track.stop());
+    photoCount++;
+    re_pic.innerHTML = 9-photoCount;
+    var img = document.createElement("img");
+    img.src = imgData;
+    img.style.width = "150px";
+    img.style.height = "150px";
+    document.getElementById("photo-" + photoCount).appendChild(img);
+
+    // Send image data to backend
+    $.ajax({
+        type: 'POST',
+        url: '{% url 'save_photo' %}',
+        data: { 'imgData': imgData },
+        success: function(data) {
+            if (photoCount == 9) {
+             webcam.srcObject.getTracks().forEach(track => track.stop());
+                window.location.href = '{% url 'pick_pic' %}';} 
+        },
+    });
+};
+function playAudio() {
+    const audio = document.createElement("audio");
+    audio.src = "{% static 'assets/images/click.mp3' %}";
+    audio.play();
+    }
+    function playAudio_c() {
+    const audio = document.createElement("audio");
+    audio.src = "{% static 'assets/images/count.wav' %}";
+    audio.play();
+    }
+    function playAudio_t() {
+    const audio = document.createElement("audio");
+    audio.src = "{% static 'assets/images/take.wav' %}";
+    audio.play();
+    }
+</script>
+</body>
+</html>

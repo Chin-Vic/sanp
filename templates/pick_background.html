@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap3 %}
+<html lang="zh-hant">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Pick Background</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-grad-school.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/lightbox.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slider.css' %}">
+</head>
+
+<body>
+<!-- <audio src="{% static 'assets/images/music.mp3' %}" autoplay></audio> -->
+<section class="section why-us" data-section="section2">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>選擇背景</h2>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div id='tabs'>
+          <section class='tabs-content'>
+              <div class="row">
+                <div class="col-md-12" >               
+                    <form id="why-us" action="" method="post">
+                        <section id="slider">
+                            <input type="radio" name="slider" value="AA" id="s1" checked>
+                            <input type="radio" name="slider" value="BB" id="s2">
+                            <input type="radio" name="slider" value="CC" id="s3">
+                            <input type="radio" name="slider" value="DD" id="s4">
+                            <label for="s1" id="slide1"><img src="{% static 'assets/images/AA.png' %}"></label>
+                            <label for="s2" id="slide2"><img src="{% static 'assets/images/BB.png' %}"></label>
+                            <label for="s3" id="slide3"><img src="{% static 'assets/images/CC.png' %}"></label>
+                            <label for="s4" id="slide4"><img src="{% static 'assets/images/DD.png' %}"></label>
+                        </section>
+                        <button onclick="playAudio();"type="submit" name="selected" id="form-submit" class="button">選擇好了</button>
+                </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
+    <script>
+        var time = 30;
+        var interval = setInterval(function() {
+            time--;
+            if (time <= 0) {
+                clearInterval(interval);
+                document.querySelectorAll('button[name="selected"]')[0].click();
+                playAudio()
+            }
+        }, 1000);
+    var slider = document.getElementById('slider');
+    $(slider).click(function() {
+        playAudio_slider();
+    });
+    function playAudio() {
+    const audio = document.createElement("audio");
+    audio.src = "{% static 'assets/images/click.mp3' %}";
+    audio.play();
+    }
+    function playAudio_slider() {
+    const audio = document.createElement("audio");
+    audio.src = "{% static 'assets/images/di.wav' %}";
+    audio.play();
+    }
+    </script>
+
+</body>
+</html>
+<script>
+    
