@@ -97,14 +97,17 @@ def pick_pic(request):
 
 def record_pic(request):
     if request.method == 'POST':
-        img_type = request.session.get('slider')
         B_img_src = request.POST.getlist('B_img_src[]')
-        imgs = [img.split('/')[-1] for img in B_img_src if 'image_' in img]
-        final = img_post_process(imgs,img_type)
-        print_photo(final)
+        request.session['B_img_src'] = B_img_src
+       
     return HttpResponse("success")
 
 def print_pic(request): 
+    img_type = request.session.get('slider')
+    B_img_src = request.session.get('B_img_src')
+    imgs = [img.split('/')[-1] for img in B_img_src if 'image_' in img]
+    img_post_process(imgs,img_type)
+    # print_photo()
     folder = os.listdir('./static/')
     rm_pic =[pic for pic in folder if 'image_' in pic]
     for filename in rm_pic:
@@ -138,7 +141,7 @@ def img_post_process(imgs,img_type):
             b = background[y, x, 0] 
             if r==0 and g==0 and  b==0:
                 background[y, x] = pic[y, x]
-    cv2.imwrite('./static/image_fin.png', background)
+    # cv2.imwrite('./static/image_fin.png', background)
 
 
 def print_photo():
@@ -146,9 +149,7 @@ def print_photo():
     VERTRES = 10
     PHYSICALWIDTH = 110
     PHYSICALHEIGHT = 111
-    PHYSICALOFFSETX = 112
-    PHYSICALOFFSETY = 113
-    printer_name = win32print.GetDefaultPrinterW() # 獲得預設印表機
+    printer_name = win32print.GetDefaultPrinterW() 
     hDC = win32ui.CreateDC ()
     hDC.CreatePrinterDC (printer_name)
     printable_area = hDC.GetDeviceCaps (HORZRES), hDC.GetDeviceCaps (VERTRES)

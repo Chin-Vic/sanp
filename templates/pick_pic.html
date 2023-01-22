@@ -108,7 +108,6 @@
     var B_table = document.getElementById("table-B");
     var B_imgs = B_table.getElementsByTagName("img");
     var B_img_src = [];
-    // window.alert(5 + 6);
 
     for(var i = 0; i < B_imgs.length; i++){
         B_img_src.push(B_imgs[i].src);
@@ -128,10 +127,9 @@
     url: '{% url 'record_pic' %}',
     data: { 'B_img_src': B_img_src },
     success: function(data) {
-        
         if(B_img_src.length == 6){
             playAudio();
-            // window.location.href = '/print_pic';
+            window.location.href = '/print_pic';
         }
         
     }

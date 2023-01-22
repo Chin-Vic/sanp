@@ -121,7 +121,7 @@
         url: '{% url 'save_photo' %}',
         data: { 'imgData': imgData },
         success: function(data) {
-            if (photoCount == 9) {
+            if (photoCount >= 9) {
              webcam.srcObject.getTracks().forEach(track => track.stop());
                 window.location.href = '{% url 'pick_pic' %}';} 
         },
