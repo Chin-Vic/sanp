@@ -4,8 +4,8 @@ import numpy as np
 import os
 import threading
 import time
-import win32print
-import win32ui
+# import win32print
+# import win32ui
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.http import JsonResponse
@@ -51,6 +51,12 @@ thread = threading.Thread(target=update_buffer)
 thread.start()
 
 def index(request):
+    folder = os.listdir('./static/')
+    rm_pic =[pic for pic in folder if 'image_' in pic]
+    if rm_pic!=[]:
+        for filename in rm_pic:
+            file_path = os.path.join('./static/', filename)
+            os.remove(file_path)
     buffer = Buffer()
     m = buffer.get_buffer()
     if request.session.get('slider'):
@@ -103,17 +109,17 @@ def record_pic(request):
     return HttpResponse("success")
 
 def print_pic(request): 
+    return render(request, 'print_pic.html')
+
+def print_pic_actually(request): 
     img_type = request.session.get('slider')
     B_img_src = request.session.get('B_img_src')
     imgs = [img.split('/')[-1] for img in B_img_src if 'image_' in img]
     img_post_process(imgs,img_type)
     # print_photo()
-    folder = os.listdir('./static/')
-    rm_pic =[pic for pic in folder if 'image_' in pic]
-    for filename in rm_pic:
-        file_path = os.path.join('./static/', filename)
-        os.remove(file_path)
-    return render(request, 'print_pic.html')
+    return HttpResponse("success")
+
+
 
 def img_post_process(imgs,img_type):
     img_postion_info = get_imgs_postion_info(img_type)
@@ -141,7 +147,9 @@ def img_post_process(imgs,img_type):
             b = background[y, x, 0] 
             if r==0 and g==0 and  b==0:
                 background[y, x] = pic[y, x]
-    # cv2.imwrite('./static/image_fin.png', background)
+    cv2.imwrite('./static/image_fin.png', background)
+    cv2.imwrite('./static/d_fin.png', background)
+
 
 
 def print_photo():

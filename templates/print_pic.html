@@ -39,7 +39,15 @@
       </div>
   </section>
   <script>      
-    setInterval('window.location.assign("http://127.0.0.1:8000/");',60000);
+      $.ajax({
+    type: 'POST',
+    url: '{% url 'print_pic_actually' %}',
+    data: {},
+    success: function(data) {
+        window.location.href = '/';
+    }
+});
+    // setInterval('window.location.assign("http://127.0.0.1:8000/");',60000);
         </script>
 </body>
 </html>

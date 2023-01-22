@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from snaksite.views import index, pick_background,take_pic,save_photo,pick_pic,record_pic,print_pic
+from snaksite.views import index, pick_background,take_pic,save_photo,pick_pic,record_pic,print_pic,print_pic_actually
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -28,5 +28,6 @@ urlpatterns = [
     path('save_photo/', save_photo, name='save_photo'),
     path('record_pic/', record_pic, name='record_pic'),
     path('print_pic/', print_pic, name='print_pic'),
+    path('print_pic_actually/', print_pic_actually, name='print_pic_actually'),
     
 ]
