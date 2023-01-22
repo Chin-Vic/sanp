@@ -4,8 +4,8 @@ import numpy as np
 import os
 import threading
 import time
-# import win32print
-# import win32ui
+import win32print
+import win32ui
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.http import JsonResponse
@@ -116,7 +116,8 @@ def print_pic_actually(request):
     B_img_src = request.session.get('B_img_src')
     imgs = [img.split('/')[-1] for img in B_img_src if 'image_' in img]
     img_post_process(imgs,img_type)
-    # print_photo()
+    print_photo()
+    print_job_checker()
     return HttpResponse("success")
 
 
@@ -188,3 +189,18 @@ def get_imgs_postion_info(img_type):
         position.append(line.split(','))
     f.close
     return position
+
+def print_job_checker():
+    check = True
+    while check:
+        for p in win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL,
+                                            None, 1):
+            flags, desc, name, comment = p
+            phandle = win32print.OpenPrinter(name)
+            print_jobs = win32print.EnumJobs(phandle, 0, -1, 1)
+            if print_jobs:
+                pass
+                win32print.ClosePrinter(phandle)
+            else:
+                win32print.ClosePrinter(phandle)
+                return
