@@ -40,7 +40,7 @@ p {
 
 .section-heading {
     text-align: center;
-    margin-bottom: 100px;
+    margin-bottom: 0px;
 }
 
 .section-heading h2:before {
@@ -56,9 +56,9 @@ p {
 
 .section-heading h2 {
     margin-top: 100px;
-    top:-80px;
+    top:-50px;
     position: relative;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 500;
     color: #fff;
     letter-spacing: 5px;
@@ -492,18 +492,31 @@ section.features .col-4 {
 /* Why Choosing Us */
 
 section.why-us {
-    background-image: url(../images/choosing-bg.jpg);
-    background-color: #172238;
-    background-repeat: no-repeat;
+    /* background-image: url(../images/choosing-bg.jpg); */
+    /* background-image: url(../images/table.png); */
+    background-color: #000000;
+    background-repeat: repeat;
     background-size: cover;
-    padding-bottom: 100px;
+    padding-bottom: 50% ;
     cursor: none!important;
 }
+
+section.why-us table {
+  background-image: url(../images/table.png);
+  /* background-color: #f3f0f0; */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin-left:auto;  
+  margin-right:auto;
+  }  
+
+
+  
 
 section.why-us button {
   background-color: #f5a425;
   color: #fff;
-  font-size: 13px;
+  font-size: 24px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-weight: 700;
@@ -513,8 +526,8 @@ section.why-us button {
   box-shadow: none;
   border: none;
   position:absolute;
-  top:600px;
-  left: 300px;;
+  top:125%;
+  left: 46%;;
   
 }
 #tabs {

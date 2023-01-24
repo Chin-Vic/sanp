@@ -10,11 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Pick Background</title>
-    
-    <!-- Bootstrap core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/templatemo-grad-school.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
@@ -23,7 +19,6 @@
 </head>
 
 <body>
-<!-- <audio src="{% static 'assets/images/music.mp3' %}" autoplay></audio> -->
 <section class="section why-us" data-section="section2">
   <div class="container">
     <div class="row">
@@ -33,26 +28,22 @@
         </div>
       </div>
       <div class="col-md-12">
-        <div id='tabs'>
-          <section class='tabs-content'>
-              <div class="row">
-                <div class="col-md-12" >               
-                    <form id="why-us" action="" method="post">
-                        <section id="slider">
-                            <input type="radio" name="slider" value="AA" id="s1" checked>
-                            <input type="radio" name="slider" value="BB" id="s2">
-                            <input type="radio" name="slider" value="CC" id="s3">
-                            <input type="radio" name="slider" value="DD" id="s4">
-                            <label for="s1" id="slide1"><img src="{% static 'assets/images/AA.png' %}"></label>
-                            <label for="s2" id="slide2"><img src="{% static 'assets/images/BB.png' %}"></label>
-                            <label for="s3" id="slide3"><img src="{% static 'assets/images/CC.png' %}"></label>
-                            <label for="s4" id="slide4"><img src="{% static 'assets/images/DD.png' %}"></label>
-                        </section>
-                        <button onclick="playAudio();"type="submit" name="selected" id="form-submit" class="button">選擇好了</button>
-                </div>
-            </div>
-          </section>
-        </div>
+        <form id="why-us" action="" method="post"></form>
+        <table id="table" style="width:100%;height:140%">
+            <tr >
+                <td style="text-align:center;"><img src= "{% static 'assets/images/4A.png' %}" style="width: 300px; height:200px;" value="AA"></td>
+                <td style="text-align:center;"><img src= "{% static 'assets/images/4B.png' %}" style="width: 300px; height:200px;" value="AA"></td>
+            </tr>
+            <tr >
+                <td style="text-align:center;"><img src= "{% static 'assets/images/4C.png' %}" style="width: 200px; height:300px;" value="AA"></td>
+                <td style="text-align:center;"><img src= "{% static 'assets/images/4D.png' %}" style="width: 200px; height:300px;" value="AA"></td>
+            </tr>
+            <tr>
+                <td style="text-align:center;"><img src= "{% static 'assets/images/4E.png' %}" style="width: 200px; height:300px;" value="AA"></td>
+                <td style="text-align:center;"><img src= "{% static 'assets/images/2A.png' %}" style="width: 100px; height:300px;" value="AA"></td>
+            </tr>
+        </table>
+        <button onclick="playAudio();"type="submit" name="selected" id="form-submit" class="button">選擇好了</button>
       </div>
     </div>
   </div>
@@ -61,7 +52,7 @@
 </section>
 
     <script>
-        var time = 30;
+        var time = 3000000;
         var interval = setInterval(function() {
             time--;
             if (time <= 0) {
@@ -88,5 +79,4 @@
 
 </body>
 </html>
-<script>
-    
+
