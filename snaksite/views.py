@@ -4,8 +4,8 @@ import numpy as np
 import os
 import threading
 import time
-import win32print
-import win32ui
+# import win32print
+# import win32ui
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.http import JsonResponse
@@ -116,8 +116,8 @@ def print_pic_actually(request):
     B_img_src = request.session.get('B_img_src')
     imgs = [img.split('/')[-1] for img in B_img_src if 'image_' in img]
     img_post_process(imgs,img_type)
-    print_photo()
-    print_job_checker()
+    # print_photo()
+    # print_job_checker()
     return HttpResponse("success")
 
 
