@@ -59,8 +59,8 @@ def index(request):
             os.remove(file_path)
     buffer = Buffer()
     m = buffer.get_buffer()
-    if request.session.get('slider'):
-        request.session.pop('slider')
+    if request.session.get('selected'):
+        request.session.pop('selected')
     if is_ajax(request=request):
       return JsonResponse({'buffer_length': m})
 
@@ -90,14 +90,13 @@ def save_photo(request):
         # decode image data
         img_data = base64.b64decode(img_data)
         with open('./static/image_'+pic.get_count()+'.jpeg', 'wb') as f:
-            print(pic.get_count())
             f.write(img_data)
         pic.update()
         return HttpResponse("success")
 
 def pick_pic(request):
-    print(122,request.session.get('slider'))
-    type_img = request.session.get('slider')  
+    print(122,request.session.get('selected'))
+    type_img = request.session.get('selected')  
     pic = PicCount()
     pic.count=1
     return render(request, 'pick_pic.html', {'type': type_img})
