@@ -112,11 +112,11 @@
     for(var i = 0; i < B_imgs.length; i++){
         B_img_src.push(B_imgs[i].src);
     }
-    if(B_img_src.length < 6){
+    if(B_img_src.length < '{{num}}'){
         var A_table = document.getElementById("table-A");
         var A_imgs = A_table.getElementsByTagName("img");
         for(var i = 0; i < A_imgs.length; i++){
-            if(B_img_src.length < 6){
+            if(B_img_src.length < '{{num}}'){
                 moveToTableB(A_imgs[i]);
                 B_img_src.push(A_imgs[i].src);
             }
@@ -127,7 +127,7 @@
     url: '{% url 'record_pic' %}',
     data: { 'B_img_src': B_img_src },
     success: function(data) {
-        if(B_img_src.length == 6){
+        if(B_img_src.length == '{{num}}'){
             playAudio();
             window.location.href = '/print_pic';
         }
