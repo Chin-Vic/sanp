@@ -71,8 +71,9 @@ def pick_background(request):
     buffer = Buffer()
     buffer.buffer = 0
     if request.method == 'POST':
-        selected = request.POST.get('slider')
-        request.session['slider'] = selected
+        print(request.POST)
+        selected = request.POST.get('selected')
+        request.session['selected'] = selected
         time.sleep(0.5)
         return HttpResponseRedirect('/take_pic')
     return render(request, 'pick_background.html')

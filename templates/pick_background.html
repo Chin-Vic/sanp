@@ -31,19 +31,19 @@
         <form id="why-us" action="" method="post">
         <table id="table" style="width:100%;height:140%">
             <tr >
-                <td style="text-align:center;"><img src= "{% static 'assets/images/4A.png' %}" style="width: 300px; height:200px;" value="4A"></td>
-                <td style="text-align:center;"><img src= "{% static 'assets/images/4B.png' %}" style="width: 300px; height:200px;" value="4B"></td>
+                <td style="text-align:center;"><img src= "{% static 'assets/images/4A.png' %}" style="width: 300px; height:200px;" ><input type="radio" name="selected" value="4A" checked></td>
+                <td style="text-align:center;"><img src= "{% static 'assets/images/4B.png' %}" style="width: 300px; height:200px;" ><input type="radio" name="selected" value="4B"></td>
             </tr>
             <tr >
-                <td style="text-align:center;"><img src= "{% static 'assets/images/4C.png' %}" style="width: 200px; height:300px;" value="4C"></td>
-                <td style="text-align:center;"><img src= "{% static 'assets/images/4D.png' %}" style="width: 200px; height:300px;" value="4D"></td>
+                <td style="text-align:center;"><img src= "{% static 'assets/images/4C.png' %}" style="width: 200px; height:300px;" ><input type="radio" name="selected" value="4C"></td>
+                <td style="text-align:center;"><img src= "{% static 'assets/images/4D.png' %}" style="width: 200px; height:300px;" ><input type="radio" name="selected" value="4D"></td>
             </tr>
             <tr>
-                <td style="text-align:center;"><img src= "{% static 'assets/images/4E.png' %}" style="width: 200px; height:300px;" value="4E"></td>
-                <td style="text-align:center;"><img src= "{% static 'assets/images/2A.png' %}" style="width: 100px; height:300px;" value="2A"></td>
+                <td style="text-align:center;"><img src= "{% static 'assets/images/4E.png' %}" style="width: 200px; height:300px;" ><input type="radio" name="selected" value="4E"></td>
+                <td style="text-align:center;"><img src= "{% static 'assets/images/2A.png' %}" style="width: 100px; height:300px;" ><input type="radio" name="selected" value="2A"></td>
             </tr>
         </table>
-        <button onclick="playAudio();"type="submit" name="selected" id="form-submit" class="button">選擇好了</button>
+        <button onclick="playAudio();"type="submit"  class="button">選擇好了</button>
       </div>
     </div>
   </div>
@@ -58,20 +58,11 @@
                 playAudio()
             }
         }, 1000);
-    var slider = document.getElementById('slider');
-    $(slider).click(function() {
-        playAudio_slider();
-    });
     function playAudio() {
     const audio = document.createElement("audio");
     audio.src = "{% static 'assets/images/click.mp3' %}";
     audio.play();
-    }
-    function playAudio_slider() {
-    const audio = document.createElement("audio");
-    audio.src = "{% static 'assets/images/di.wav' %}";
-    audio.play();
-    }
+    } 
     </script>
 
 </body>
