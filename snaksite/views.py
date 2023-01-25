@@ -95,8 +95,9 @@ def save_photo(request):
         return HttpResponse("success")
 
 def pick_pic(request):
-    print(122,request.session.get('slider'))
-    type_img = request.session.get('slider')  
+    print(122,request.session.get('selected'))
+    type_img = request.session.get('selected')  
+    num_img = get_num_info(type_img)
     pic = PicCount()
     pic.count=1
     return render(request, 'pick_pic.html', {'type': type_img,'num':num_img})
