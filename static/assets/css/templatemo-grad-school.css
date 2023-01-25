@@ -502,7 +502,7 @@ section.why-us {
 }
 
 section.why-us table {
-  background-image: url(../images/table.png);
+  /* background-image: url(../images/table.png); */
   /* background-color: #f3f0f0; */
   background-size: 100% 100%;
   background-repeat: no-repeat;
