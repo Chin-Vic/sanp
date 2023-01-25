@@ -97,9 +97,10 @@ def save_photo(request):
 def pick_pic(request):
     print(122,request.session.get('selected'))
     type_img = request.session.get('selected')  
+    num_img = get_num_info(type_img)
     pic = PicCount()
     pic.count=1
-    return render(request, 'pick_pic.html', {'type': type_img})
+    return render(request, 'pick_pic.html', {'type': type_img,'num':num_img})
 
 def record_pic(request):
     if request.method == 'POST':
@@ -112,7 +113,7 @@ def print_pic(request):
     return render(request, 'print_pic.html')
 
 def print_pic_actually(request): 
-    img_type = request.session.get('slider')
+    img_type = request.session.get('selected')
     B_img_src = request.session.get('B_img_src')
     imgs = [img.split('/')[-1] for img in B_img_src if 'image_' in img]
     img_post_process(imgs,img_type)
@@ -124,17 +125,18 @@ def print_pic_actually(request):
 
 def img_post_process(imgs,img_type):
     img_postion_info = get_imgs_postion_info(img_type)
-    background = Image.open(os.path.join('./static/assets/images', img_type+'.png'))
+    background = Image.open(os.path.join('./static/assets/images', img_type+'_1.png'))
     empty = Image.new('RGB', (background.size))
     for idx,img in enumerate(imgs):
         bmp = Image.open (os.path.join('./static/', img))
-        w_ = int(img_postion_info[idx][0])
-        h_ = int(img_postion_info[idx][1])
-        cx = int(img_postion_info[idx][2])
-        cy = int(img_postion_info[idx][3])
+        x = int(img_postion_info[idx][0])
+        y = int(img_postion_info[idx][1])
+        w_ = int(img_postion_info[idx][2])
+        h_ = int(img_postion_info[idx][3])
         bmp = bmp.resize((w_,h_))
-        empty.paste(bmp,(int(cx-w_/2),int(cy-h_/2)))
-
+        empty.paste(bmp,(int(x),int(y)))
+    empty_ = cv2.cvtColor(np.asarray(empty), cv2.COLOR_RGB2BGR)
+    cv2.imwrite('./static/empty.png', empty_)
     pic = cv2.cvtColor(np.asarray(empty), cv2.COLOR_RGB2BGR)
     pic = cv2.cvtColor(pic, cv2.COLOR_BGR2BGRA)
     background = cv2.cvtColor(np.asarray(background), cv2.COLOR_RGB2BGR)
@@ -146,8 +148,9 @@ def img_post_process(imgs,img_type):
             r = background[y, x, 2]
             g = background[y, x, 1]  
             b = background[y, x, 0] 
-            if r==0 and g==0 and  b==0:
+            if r>250 and g>250 and  b>250:
                 background[y, x] = pic[y, x]
+    # background = cv2.bilateralFilter(background, 51, 80, 10) 
     cv2.imwrite('./static/image_fin.png', background)
     cv2.imwrite('./static/d_fin.png', background)
 
@@ -185,10 +188,16 @@ def print_photo():
 def get_imgs_postion_info(img_type):
     position = []
     f = open(os.path.join('./static/position', img_type+'.txt'))
-    for line in f.readlines():
+    for line in f.readlines()[1:]:
         position.append(line.split(','))
     f.close
     return position
+
+def get_num_info(img_type):
+    f = open(os.path.join('./static/position', img_type+'.txt'))
+    num = int(f.readlines()[0][0])
+    f.close
+    return num
 
 def print_job_checker():
     check = True
