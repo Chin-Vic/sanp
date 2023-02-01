@@ -27,44 +27,78 @@
           <h2>選擇背景</h2>
         </div>
       </div>
-      <div class="col-md-12">
-        <form id="why-us" action="" method="post">
-        <table id="table" style="width:100%;height:140%">
-            <tr >
-                <td style="text-align:center;"><img src= "{% static 'assets/images/4A.png' %}" style="width: 300px; height:200px;" ><input type="radio" name="selected" value="4A" checked></td>
-                <td style="text-align:center;"><img src= "{% static 'assets/images/4B.png' %}" style="width: 300px; height:200px;" ><input type="radio" name="selected" value="4B"></td>
-            </tr>
-            <tr >
-                <td style="text-align:center;"><img src= "{% static 'assets/images/4C.png' %}" style="width: 200px; height:300px;" ><input type="radio" name="selected" value="4C"></td>
-                <td style="text-align:center;"><img src= "{% static 'assets/images/4D.png' %}" style="width: 200px; height:300px;" ><input type="radio" name="selected" value="4D"></td>
-            </tr>
-            <tr>
-                <td style="text-align:center;"><img src= "{% static 'assets/images/4E.png' %}" style="width: 200px; height:300px;" ><input type="radio" name="selected" value="4E"></td>
-                <td style="text-align:center;"><img src= "{% static 'assets/images/2A.png' %}" style="width: 100px; height:300px;" ><input type="radio" name="selected" value="2A"></td>
-            </tr>
-        </table>
+      <div class="background-container">
+        <div class="rows">
+          <div class="background-wrapper" onclick="handleClickItem(this)" value="4A">
+            <img class="background-item" src= "{% static 'assets/images/4A.png' %}" >
+          </div>
+          <div class="background-wrapper" onclick="handleClickItem(this)" value="4B">
+            <img class="background-item" src= "{% static 'assets/images/4B.png' %}">
+          </div>
+        </div>
+        <div class="rows">
+          <div class="background-wrapper" onclick="handleClickItem(this)" value="4C">
+            <img class="background-item" src= "{% static 'assets/images/4C.png' %}">
+          </div>
+          <div class="background-wrapper" onclick="handleClickItem(this)" value="4D">
+            <img class="background-item" src= "{% static 'assets/images/4D.png' %}">
+          </div>
+        </div>
+        <div class="rows">
+          <div class="background-wrapper" onclick="handleClickItem(this)" value="4E">
+            <img class="background-item" src= "{% static 'assets/images/4E.png' %}">
+          </div>
+          <div class="background-wrapper" onclick="handleClickItem(this)" value="2A">
+            <img class="background-item" src= "{% static 'assets/images/2A.png' %}">
+          </div>
+        </div>
         <button onclick="playAudio();"type="submit"  class="button">選擇好了</button>
       </div>
     </div>
   </div>
 </section>
-    <script>
-        var time = 3000000;
-        var interval = setInterval(function() {
-            time--;
-            if (time <= 0) {
-                clearInterval(interval);
-                document.querySelectorAll('button[name="selected"]')[0].click();
-                playAudio()
-            }
-        }, 1000);
-    function playAudio() {
+<script>
+    var time = 3000000;
+    let selectItem = 0;
+    var interval = setInterval(function() {
+        time--;
+        if (time <= 0) {
+            clearInterval(interval);
+            document.querySelectorAll('button[name="selected"]')[0].click();
+            playAudio()
+        }
+    }, 1000);
+  function playAudio() {
     const audio = document.createElement("audio");
     audio.src = "{% static 'assets/images/click.mp3' %}";
     audio.play();
-    } 
-    </script>
+  } 
+  function handleClickItem(target) {
+    selectItem = target.getAttribute('value');
+    document.querySelectorAll('.background-wrapper').forEach(e=> { e.style.border = "0px solid transparent" });
+    document.querySelector(`div[value="${selectItem}"]`).style.border = "2px solid red"
+  }
+</script>
+<style>
+.background-container {
+  margin: auto;
+}
 
+.background-container .rows{
+display: flex;
+margin-top: 20px;
+}
+
+.background-item {
+  width: 300px; 
+  height:200px;
+}
+
+.background-wrapper:not(:first-child) {
+margin-left: 20px;
+}
+
+</style>
 </body>
 </html>
 
